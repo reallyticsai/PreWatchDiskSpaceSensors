@@ -1,2 +1,8 @@
 oversight:
   version: OV_VERSION
+mongo:
+  host: MONGO_DATABASE_IP
+  port: MONGO_DATABASE_PORT
+  user: MONGO_DATABASE_USER
+  password: MONGO_DATABASE_PWD
+  db: MONGO_DATABASE_DBNAME
