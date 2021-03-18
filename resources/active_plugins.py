@@ -1,0 +1,4 @@
+plugins = [
+    "mongoexample",
+    "mongoexample2"
+]

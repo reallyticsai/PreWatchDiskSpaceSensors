@@ -1,3 +1,3 @@
 class DbServiceInterface:
-    def execute_query(self, query_str):
+    def execute_query(self, table, query_str):
         pass

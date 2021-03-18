@@ -1,11 +1,43 @@
 import time
 from config2.config import config
 from src.dbservice.dbservicefactory import DbServiceFactory
+import importlib
+from resources.active_plugins import plugins
+import requests
+import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-def run():
+
+def generate_signal(signal_name, value):
+    headers = {
+        'Content-Type': 'application/json',
+    }
+    json = { "deployment" : { "ACD" : "Predictive", "tenantID" : "avaya" }, 
+    "name" : signal_name, "__v" : 0, "level" : value, 
+    "payload" : {"state": "1", "data" : [[ { "Info":"Predictive sensor" } ]] }, "signaler" : "Pre-Watch", "syncRequest":True, 
+    "timestamps" : { "postTime" : round(time.time() * 1000) }
+    }
+
+    response = requests.post('http://%s:%i/signal'%(config.oversight.host,config.oversight.port), headers=headers, json=json)
+    if(not response.ok):
+        logging.ERROR("POST request to oversight:http://%s:%i/signal failed"%(config.oversight.host,config.oversight.port))
+
+def run(): 
+    #create the db service factory
     dbservicefactory = DbServiceFactory()
-    dbservice = dbservicefactory.get_db_service()
-    while(not time.sleep(5)):
-        df = dbservice.execute_query("probeconfigs","{'name':'hello'}")
-        print(df)
-        print("hello")
+    
+    # create a list of plugins
+    active_plugins = [
+        importlib.import_module("."+plugin,"resources.plugins").Plugin(dbservicefactory) for plugin in plugins
+    ]
+
+    while(not time.sleep(config.interval)):
+        with ThreadPoolExecutor(max_workers = config.max_threads) as executor:
+            futures = {executor.submit(pg.process): pg.get_name() for pg in active_plugins}
+            for future in as_completed(futures):
+                signal_name = futures[future]
+                value = future.result()
+                generate_signal(signal_name,value.value)
+            # signal_name = plugin.get_name()
+            # level = plugin.process()
+            # generate_signal(signal_name,level.value)

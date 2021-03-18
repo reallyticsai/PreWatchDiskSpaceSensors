@@ -14,9 +14,8 @@ class MongoService(DbServiceInterface):
         self.client = pymongo.MongoClient(mongo_uri)
         self.db = self.client[config.mongo.db]
 
-    def execute_query(self, table, query_str):
+    def execute_query(self, table, query):
         collection = self.db[table]
-        query = ast.literal_eval(query_str)
         result = collection.find(query)
         df = DataFrame(list(result))
         return df
