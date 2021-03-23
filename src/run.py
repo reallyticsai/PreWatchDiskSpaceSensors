@@ -20,7 +20,9 @@ def generate_signal(signal_name, value):
 
     response = requests.post('http://%s:%i/signal'%(config.oversight.host,config.oversight.port), headers=headers, json=json)
     if(not response.ok):
-        logging.ERROR("POST request to oversight:http://%s:%i/signal failed"%(config.oversight.host,config.oversight.port))
+        logging.error("POST request to oversight:http://%s:%i/signal failed"%(config.oversight.host,config.oversight.port))
+    else:
+        logging.info("Predictive Signal %s generated."%(signal_name))
 
 def run(): 
     #create the db service factory
@@ -30,7 +32,16 @@ def run():
     active_plugins = [
         importlib.import_module("."+plugin,"resources.plugins").Plugin(dbservicefactory) for plugin in plugins
     ]
+    logging.info("Default plugins loaded")
+    logging.info(plugins)
 
+    #import external plugins
+    external_plugins = config.externalplugins
+    if(external_plugins != None):
+        external_plugins = external_plugins.split(',')
+        for plugin in external_plugins:
+            active_plugins.append(importlib.import_module("."+plugin,"resources.externalplugins").Plugin(dbservicefactory))
+            logging.INFO("External plugin %s loaded"%(plugin))
     while(not time.sleep(config.interval)):
         with ThreadPoolExecutor(max_workers = config.max_threads) as executor:
             futures = {executor.submit(pg.process): pg.get_name() for pg in active_plugins}
@@ -38,6 +49,3 @@ def run():
                 signal_name = futures[future]
                 value = future.result()
                 generate_signal(signal_name,value.value)
-            # signal_name = plugin.get_name()
-            # level = plugin.process()
-            # generate_signal(signal_name,level.value)

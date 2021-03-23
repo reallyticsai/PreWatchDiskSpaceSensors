@@ -9,5 +9,6 @@ mongo:
   password: PW_MONGO_DATABASE_PWD
   db: PW_MONGO_DATABASE_DBNAME
 
+externalplugins: PW_EXTERNAL_PLUGINS
 interval: PW_PROCESS_INTERVAL
 max_threads: PW_MAX_THREADS
