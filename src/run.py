@@ -17,13 +17,14 @@ def generate_signal(signal_name, value):
     "payload" : {"state": "1", "data" : [[ { "Info":"Predictive sensor" } ]] }, "signaler" : "Pre-Watch", "syncRequest":True, 
     "timestamps" : { "postTime" : round(time.time() * 1000) }
     }
-
-    response = requests.post('http://%s:%i/signal'%(config.oversight.host,config.oversight.port), headers=headers, json=json)
-    if(not response.ok):
+    try:
+        response = requests.post('http://%s:%i/signal'%(config.oversight.host,config.oversight.port), headers=headers, json=json)
+    except Exception as e:
         logging.error("POST request to oversight:http://%s:%i/signal failed"%(config.oversight.host,config.oversight.port))
-    else:
+    
+    if(response.ok):
         logging.info("Predictive Signal %s generated."%(signal_name))
-
+        
 def run(): 
     #create the db service factory
     dbservicefactory = DbServiceFactory()
@@ -37,11 +38,13 @@ def run():
 
     #import external plugins
     external_plugins = config.externalplugins
-    if(external_plugins != None):
+    print(type(external_plugins))
+    print(external_plugins)
+    if(external_plugins != None and external_plugins != ""):
         external_plugins = external_plugins.split(',')
         for plugin in external_plugins:
             active_plugins.append(importlib.import_module("."+plugin,"resources.externalplugins").Plugin(dbservicefactory))
-            logging.INFO("External plugin %s loaded"%(plugin))
+            logging.info("External plugin %s loaded"%(plugin))
     while(not time.sleep(config.interval)):
         with ThreadPoolExecutor(max_workers = config.max_threads) as executor:
             futures = {executor.submit(pg.process): pg.get_name() for pg in active_plugins}
