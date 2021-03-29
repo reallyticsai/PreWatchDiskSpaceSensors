@@ -17,12 +17,12 @@ def generate_signal(signal_name, value, payload):
     "payload" : {"state": "1", "data" : [[ payload ]] }, "signaler" : "Pre-Watch", "syncRequest":True, 
     "timestamps" : { "postTime" : round(time.time() * 1000) }
     }
+    response = None
     try:
         response = requests.post('http://%s:%i/signal'%(config.oversight.host,config.oversight.port), headers=headers, json=json)
     except Exception as e:
         logging.error("POST request to oversight:http://%s:%i/signal failed"%(config.oversight.host,config.oversight.port))
-    
-    if(response.ok):
+    if(response != None and response.ok):
         logging.info("Predictive Signal %s generated."%(signal_name))
         
 def run(): 
@@ -60,6 +60,6 @@ def run():
                 try:
                     value, payload = future.result()
                 except Exception as exc:
-                    print('%r generated an exception: %s' % (signal_name, exc))
+                    logging.error('%r generated an exception: %s' % (signal_name, exc))
                 else:
                     generate_signal(signal_name,value.value,payload)

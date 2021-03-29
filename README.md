@@ -80,9 +80,11 @@ plugins = [
 An External plugin is practically created in the same way as a standard plugin but is intended to be deployed in a running instance (in production) of this service.
 
 To create an external plugin follow these steps:
-### Step 1: Create a new script file on the target machine at /etc/oversight/prewatch/externalplugins
+### Step 1: Create a new script file (and package if required) on the host machine at /etc/oversight/prewatch/externalplugins
 ```bash
-touch /etc/oversight/prewatch/externalplugins/helloprediction.py
+touch /etc/oversight/pre-watch/externalplugins/__init__.py
+
+touch /etc/oversight/pre-watch/externalplugins/helloprediction.py
 ```
 
 ### Step 2: Follow Step 2 as in the above section
@@ -90,7 +92,6 @@ touch /etc/oversight/prewatch/externalplugins/helloprediction.py
 ### Step 3: Add the file name to the environment variable (PW_EXTERNAL_PLUGINS) in the docker-compose file as a comma-separated list
 ```
 environment:
-      - PW_OV_VERSION=1
       - PW_EXTERNAL_PLUGINS=something,helloprediction
 ```
 

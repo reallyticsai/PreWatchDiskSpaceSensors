@@ -1,3 +1,5 @@
+oversight:
+  host: 'oversight-service'
 mongo:
   host: 'oversight-mongo-db'
 
