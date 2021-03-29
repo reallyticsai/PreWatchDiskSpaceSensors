@@ -2,6 +2,7 @@
 from src.dbservice.dbservicefactory import DbServiceFactory
 from src.levels import Levels
 import logging
+from statistics import mean,stdev
 
 # Each new class must be named Plugin  
 class Plugin:
@@ -12,6 +13,10 @@ class Plugin:
     #define this function to return the name of the signal (this will appear on the oversight UI)
     def get_name(self):
         return "Predictive Data Directory AI VM"
+
+    #define this function to return the interval that this signal must run
+    def get_interval(self):
+        return 30 #runs every ten seconds
 
     #do all the processing here (do not rename this function)
     def process(self):
@@ -26,13 +31,14 @@ class Plugin:
             data_current = self.dbservice.execute_query("currentsignaldatapoints",query)
         except Exception as e:
             logging.error("Unable to execute query:",e)
-        #Do some magic here
         m = mean(data_historical.payload.data.value); # Mean of the values of historical data for the sensor
-        s = stddev(data_historical.payload.data.value); # Standard Deviation of the values of historical data for the sensor
+        s = stdev(data_historical.payload.data.value); # Standard Deviation of the values of historical data for the sensor
         result = m+s+(2*s); #mean + standard deviation + 2 standard deviation
         # mean+std+2std for the past 45 days historical data
+        
+        payload = {}
         if data_current.payload.data.value > 80 and data_current.payload.data.value < 85:
-            return Levels.WARNING; #Warning
+            return Levels.WARNING, payload #Warning
         elif data_current.payload.data.value < m or data_current.payload.data.value < 80:
-            return Levels.NORMAL; #Normal
-        return Levels.ALARM; #Alarmed
+            return Levels.NORMAL, payload #Normal
+        return Levels.ALARM, payload #Alarmed

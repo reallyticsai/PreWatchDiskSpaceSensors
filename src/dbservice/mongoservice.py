@@ -7,10 +7,8 @@ import ast
 class MongoService(DbServiceInterface):
 
     def __init__(self):
-        print("In mongo service const")
         auth_section = config.mongo.user+':'+config.mongo.password+'@'
         mongo_uri = "mongodb://%s%s:%s" % (auth_section,config.mongo.host,config.mongo.port)
-        print(mongo_uri)
         self.client = pymongo.MongoClient(mongo_uri)
         self.db = self.client[config.mongo.db]
 

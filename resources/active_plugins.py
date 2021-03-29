@@ -1,4 +1,4 @@
 plugins = [
-    "mongoexample",
-    "mongoexample2"
+    "data-dir-ai-vm",
+    "boilerplate"
 ]

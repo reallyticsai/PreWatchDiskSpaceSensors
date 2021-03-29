@@ -2,6 +2,7 @@
 from src.dbservice.dbservicefactory import DbServiceFactory
 from src.levels import Levels
 import logging
+from time import sleep
 
 # Each new class must be named Plugin  
 class Plugin:
@@ -11,7 +12,11 @@ class Plugin:
     
     #define this function to return the name of the signal (this will appear on the oversight UI)
     def get_name(self):
-        return "Mongo2 Example Prediction"
+        return "Mongo Example Prediction"
+    
+    #define this function to return the interval that this signal must run
+    def get_interval(self):
+        return 60 #runs every ten seconds
 
     #do all the processing here (do not rename this function)
     def process(self):
@@ -19,7 +24,7 @@ class Plugin:
         #For more help with queries visit: https://www.w3schools.com/python/python_mongodb_query.asp
         query = {
             "name": {
-                "$regex":'AI',
+                "$regex":'V6',
                 "$options":'i'
             }
         }
@@ -29,5 +34,8 @@ class Plugin:
         except Exception as e:
             logging.error("Unable to execute query:",e)
         #Do some magic here
+
+        sleep(5)
+        payload = {}
         
-        return Levels.ALARM
+        return Levels.NORMAL,payload

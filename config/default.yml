@@ -10,5 +10,4 @@ mongo:
   db: 'oversight'
 
 externalplugins:
-interval: 5
 max_threads: 8
