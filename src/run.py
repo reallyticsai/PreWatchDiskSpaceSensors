@@ -44,7 +44,7 @@ def run():
             active_plugins.append(importlib.import_module("."+plugin,"resources.externalplugins").Plugin(dbservicefactory))
             logging.info("External plugin %s loaded"%(plugin))
     time_stamps = {}
-    while(True):
+    while(not time.sleep(1)):
         with ThreadPoolExecutor(max_workers = config.max_threads) as executor:
             
             futures = {}
