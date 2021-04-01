@@ -18,7 +18,7 @@ pip install -r requirements.txt
 ### Executing program (locally)
 
 ```
-python -m app.py
+python -m app
 ```
 
 ### Executing program (production)
