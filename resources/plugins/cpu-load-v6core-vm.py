@@ -1,4 +1,3 @@
-
 from src.dbservice.dbservicefactory import DbServiceFactory
 from statistics import mean,stdev
 import json
@@ -17,10 +16,10 @@ class Plugin:
         self.result=0
         self.list1 = []
         self.query = {
-            "name": "DATA DIRECTORY AI VM"
+            "name": "CPU LOAD V6CORE VM"
         }
         self.payload = {
-            "Name": "Predictive Data Directory AI VM",
+            "Name": "Predictive CPU LOAD V6CORE VM",
             "Value": 0,
             "State": Levels.NORMAL,
             "Mean" : 0,
@@ -43,7 +42,7 @@ class Plugin:
         
     #define this function to return the name of the signal (this will appear on the oversight UI)
     def get_name(self):
-        return "Predictive Data Directory AI VM"
+        return "Predictive CPU LOAD V6CORE VM"
 
     #define this function to return the interval that this signal must run
     def get_interval(self):
@@ -86,5 +85,5 @@ class Plugin:
             return Levels.ALARM, self.payload #Alarmed
         else:
             self.payload['State']=Levels.NORMAL
-            return Levels.NORMAL, self.payload #Normal
+            return Levels.NORMAL, self.payload #
         # Name , Current Value, Sensor state Alarm warning or Norma, mean, standard dev
