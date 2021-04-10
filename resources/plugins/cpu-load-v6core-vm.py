@@ -9,6 +9,7 @@ import datetime
 class Plugin:
 
     def __init__(self, dbservicefactory):
+        # Initialization of sensor values
         self.dbservice = dbservicefactory.get_db_service()
         self.value=0
         self.m=0
@@ -19,7 +20,7 @@ class Plugin:
             "name": "CPU LOAD V6CORE VM"
         }
         self.payload = {
-            "Name": "Predictive CPU LOAD V6CORE VM",
+            "Name": "PREDICTIVE CPU LOAD V6CORE VM",
             "Value": 0,
             "State": Levels.NORMAL,
             "Mean" : 0,
@@ -27,26 +28,26 @@ class Plugin:
             }
         self.data_historical = self.dbservice.execute_query("historicalsignaldatapoints",self.query)
         self.data_current = self.dbservice.execute_query("currentsignaldatapoints",self.query)
-        self.value = self.data_current['payload'][0]['data'][0]["value"] #['value'] keyyy #Current Value
+        self.value = round(float(self.data_current['payload'][0]['data'][0][0]['value'])) #Current Value for comparison
         self.payload['Value']=self.value
         self.start_date = datetime.date.today()
         self.data_historical['datetime'] = self.data_historical['__createdAt'].apply(lambda x: datetime.date(x.year,x.month,x.day))    
         for i in range(len(self.data_historical)):
             if(datetime.date.today()-datetime.timedelta(days=30)<=self.data_historical['datetime'][i]): #30 days old data only
-                self.list1.append(self.data_historical['payload'][0]['data'][0]["value"]) #['value'] keyyy    
-        self.m = mean(self.list1) # Mean of the values of historical data for the sensor
+                self.list1.append(round(float(self.data_historical['payload'][0]['data'][0][0]['value']))) #Append to list for mean and stdev    
+        self.m = round(mean(self.list1)) # Mean of the values of historical data for the sensor
         self.payload['Mean']=self.m
-        self.s = stdev(self.list1) # Standard Deviation of the values of historical data for the sensor
+        self.s = round(stdev(self.list1)) # Standard Deviation of the values of historical data for the sensor
         self.payload['Stdev']=self.s
         self.result = self.m+self.s+self.s #mean + standard deviation + 2 standard deviation
         
     #define this function to return the name of the signal (this will appear on the oversight UI)
     def get_name(self):
-        return "Predictive CPU LOAD V6CORE VM"
+        return "PREDICTIVE CPU LOAD V6CORE VM"
 
     #define this function to return the interval that this signal must run
     def get_interval(self):
-        return 180 #runs every 60 seconds or 1 minute
+        return 60 #runs every 60 seconds or 1 minute
 
     #do all the processing here (do not rename this function)
     def process(self):
@@ -62,28 +63,41 @@ class Plugin:
                 self.data_historical['datetime'] = self.data_historical['__createdAt'].apply(lambda x: datetime.date(x.year,x.month,x.day))    
                 for i in range(len(self.data_historical)):
                     if(datetime.date.today()-datetime.timedelta(days=30)<=self.data_historical['datetime'][i]): #30 days old data only
-                        self.list1.append(self.data_historical['payload'][0]['data'][0]["value"]) #['value'] keyyy
-                    
-                self.m = mean(self.list1) # Mean of the values of historical data for the sensor
-                self.payload['Mean']=self.m
-                self.s = stdev(self.list1) # Standard Deviation of the values of historical data for the sensor
-                self.payload['Stdev']=self.s
+                        self.list1.append(round(float(self.data_historical['payload'][0]['data'][0][0]['value']))) #Append to list for mean and stdev
+                self.m = round(mean(self.list1)) # Mean of the values of historical data for the sensor
+                self.s = round(stdev(self.list1)) # Standard Deviation of the values of historical data for the sensor
                 self.result = self.m+self.s+self.s #mean + standard deviation + 2 standard deviation
             else:
                 self.data_current = self.dbservice.execute_query("currentsignaldatapoints",self.query)
-                self.value = self.data_current['payload'][0]['data'][0]["value"] #['value'] keyyy #Current Value
-                self.payload['Value']=self.value
-            
+                self.value = round(float(self.data_current['payload'][0]['data'][0][0]['value'])) #Current Value
+                            
         except Exception as e:
             logging.error("Unable to execute query:",e)
-        
+        payload2 = {}
         if self.value > self.m+self.s:
+            self.payload['Name']= "PREDICTIVE CPU LOAD V6CORE VM"
+            self.payload['Value']=self.value
             self.payload['State']=Levels.WARN
-            return Levels.WARN, self.payload #Warning WARNING not available
+            self.payload['Mean']=self.m
+            self.payload['Stdev']=self.s
+            print(self.payload)
+            #payload2 = self.payload
+            return Levels.WARN,payload2#, self.payload #Warning
         elif self.value > self.result:
+            self.payload['Name']="PREDICTIVE CPU LOAD V6CORE VM"
+            self.payload['Value']=self.value
             self.payload['State']=Levels.ALARM
-            return Levels.ALARM, self.payload #Alarmed
+            self.payload['Mean']=self.m
+            self.payload['Stdev']=self.s
+            print(self.payload)
+            #payload2 = self.payload
+            return Levels.ALARM,payload2#, self.payload #Alarmed
         else:
+            self.payload['Name']="PREDICTIVE CPU LOAD V6CORE VM"
+            self.payload['Value']=self.value
             self.payload['State']=Levels.NORMAL
-            return Levels.NORMAL, self.payload #
-        # Name , Current Value, Sensor state Alarm warning or Norma, mean, standard dev
+            self.payload['Mean']=self.m
+            self.payload['Stdev']=self.s
+            print(self.payload)
+            #payload2 = self.payload
+            return Levels.NORMAL,payload2#, self.payload #Normal
