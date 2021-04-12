@@ -73,15 +73,12 @@ class Plugin:
                             
         except Exception as e:
             logging.error("Unable to execute query:",e)
-        #payload2 = {}
         if self.value > self.m+self.s:
             self.payload['Name']= "PREDICTIVE DATA DIRECTORY AI VM"
             self.payload['Value']=self.value
             self.payload['State']="WARNING"
             self.payload['Mean']=self.m
             self.payload['Stdev']=self.s
-            #print(self.payload)
-            #payload2 = self.payload
             return Levels.WARN,self.payload#, self.payload #Warning
         elif self.value > self.result:
             self.payload['Name']="PREDICTIVE DATA DIRECTORY AI VM"
@@ -89,15 +86,11 @@ class Plugin:
             self.payload['State']="ALARMED"
             self.payload['Mean']=self.m
             self.payload['Stdev']=self.s
-            #print(self.payload)
-            #payload2 = self.payload
-            return Levels.ALARM,self.payload#, self.payload #Alarmed
+            return Levels.ALARM,self.payload #Alarmed
         else:
             self.payload['Name']="PREDICTIVE DATA DIRECTORY AI VM"
             self.payload['Value']=self.value
             self.payload['State']="NORMAL"
             self.payload['Mean']=self.m
             self.payload['Stdev']=self.s
-            #print(self.payload)
-            #payload2 = self.payload
-            return Levels.NORMAL,self.payload#, self.payload #Normal
+            return Levels.NORMAL,self.payload #Normal
