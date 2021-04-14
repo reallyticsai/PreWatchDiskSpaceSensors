@@ -17,10 +17,10 @@ class Plugin:
         self.result=0
         self.list1 = []
         self.query = {
-            "name": "CPU LOAD V6CORE VM"
+            "name": "CPU LOAD ARCHDB VM"
         }
         self.payload = {
-            "name": "PREDICTIVE CPU LOAD V6CORE VM",
+            "name": "PREDICTIVE CPU LOAD ARCHDB VM",
             "value": 0,
             "state": "NORMAL",
             "mean" : 0,
@@ -43,7 +43,7 @@ class Plugin:
         
     #define this function to return the name of the signal (this will appear on the oversight UI)
     def get_name(self):
-        return "PREDICTIVE CPU LOAD V6CORE VM"
+        return "PREDICTIVE CPU LOAD ARCHDB VM"
 
     #define this function to return the interval that this signal must run
     def get_interval(self):
@@ -75,21 +75,21 @@ class Plugin:
             logging.error("Unable to execute query:",e)
         
         if self.value > self.m+self.s:
-            self.payload['name']= "PREDICTIVE CPU LOAD V6CORE VM"
+            self.payload['name']= "PREDICTIVE CPU LOAD ARCHDB VM"
             self.payload['value']=self.value
             self.payload['state']="WARNING"
             self.payload['mean']=self.m
             self.payload['stdev']=self.s
             return Levels.WARN,self.payload #Warning
         elif self.value > self.result:
-            self.payload['name']="PREDICTIVE CPU LOAD V6CORE VM"
+            self.payload['name']="PREDICTIVE CPU LOAD ARCHDB VM"
             self.payload['value']=self.value
             self.payload['state']="ALARMED"
             self.payload['mean']=self.m
             self.payload['stdev']=self.s
             return Levels.ALARM,self.payload #Alarmed
         else:
-            self.payload['name']="PREDICTIVE CPU LOAD V6CORE VM"
+            self.payload['name']="PREDICTIVE CPU LOAD ARCHDB VM"
             self.payload['value']=self.value
             self.payload['state']="NORMAL"
             self.payload['mean']=self.m
