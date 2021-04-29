@@ -14,5 +14,10 @@ plugins = [
     "cpu-load-proddb-vm",
     "cpu-load-archdb-vm",
     "cpu-load-ai-vm",
+    "ram-usage-proddb-vm",
+    "ram-usage-archdb-vm",
+    "ram-usage-v6core-vm",
+    "ram-usage-ai-vm",
+    "mysql-service-status-proddb-vm",
     "boilerplate"
 ]
