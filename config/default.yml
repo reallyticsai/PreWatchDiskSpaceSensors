@@ -1,5 +1,5 @@
 oversight:
-  version: 1
+  version: 3
   host: "127.0.0.1"
   port: 4321
 mongo:
@@ -8,6 +8,12 @@ mongo:
   user: oversightUser
   password: somesecretpassword
   db: 'oversight'
+influx:
+  host: '127.0.0.1'
+  port: 8086
+  user: admin
+  password: P@ssword1
+  db: 'monitoring'
 
 externalplugins:
 max_threads: 8
