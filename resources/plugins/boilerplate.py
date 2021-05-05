@@ -15,8 +15,10 @@ class Plugin:
     def get_name(self):
         if(config.oversight.version == 1 or config.oversight.version == "1"):
             return "Mongo Example Prediction"
-        elif (config.oversight.version == 3 or config.oversight.version == "3"):
-            return "Influx Example Prediction"
+        elif (config.oversight.version == 3.1 or config.oversight.version == "3.1"):
+            return "Influx v1 Example Prediction"
+        elif (config.oversight.version == 3.2 or config.oversight.version == "3.2"):
+            return "Influx v2 Example Prediction"
         
         return ""
     
@@ -36,14 +38,16 @@ class Plugin:
                 }
             }
             table = "historicalsignaldatapoints"
-        elif (config.oversight.version == 3 or config.oversight.version == "3"):
+        elif (config.oversight.version == 3.1 or config.oversight.version == "3.1"):
             query = "SHOW SERIES"
             table = ""
+        elif (config.oversight.version == 3.2 or config.oversight.version == "3.2"):
+            query = 'from(bucket:"my-bucket") |> range(start: -60m)'
+            table = ''
 
         #Fetch data into the dataframe
         try:
             df = self.dbservice.execute_query(table, query)
-            print(df)
         except Exception as e:
             logging.error("Unable to execute query:",e)
         #Do some magic here
