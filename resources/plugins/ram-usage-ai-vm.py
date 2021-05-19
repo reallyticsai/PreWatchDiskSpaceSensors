@@ -96,14 +96,14 @@ class Plugin:
                             
         except Exception as e:
             logging.error("Unable to execute query:",e)
-        if self.value > self.m+self.s:
+        if self.value >= self.m+self.s and self.value < self.result:
             self.payload['value']=self.value
             self.payload['state']="WARNING"
             self.payload['mean']=self.m
             self.payload['stdev']=self.s
             self.payload['expected value']=self.exp
             return Levels.WARN,self.payload#, self.payload #Warning
-        elif self.value > self.result:
+        elif self.value >= self.result:
             self.payload['value']=self.value
             self.payload['state']="ALARMED"
             self.payload['mean']=self.m
