@@ -5,6 +5,7 @@ import importlib
 from resources.active_plugins import plugins
 import requests
 import logging
+import traceback
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
@@ -21,7 +22,7 @@ def generate_signal(signal_name, value, payload):
     try:
         response = requests.post('http://%s:%i/signal'%(config.oversight.host,config.oversight.port), headers=headers, json=json)
     except Exception as e:
-        logging.error("POST request to oversight:http://%s:%i/signal failed"%(config.oversight.host,config.oversight.port))
+        logging.error("POST request to oversight:http://%s:%i/signal failed for signal %s"%(config.oversight.host,config.oversight.port,signal_name))
     if(response != None and response.ok):
         logging.info("Predictive Signal %s generated."%(signal_name))
         
@@ -30,9 +31,13 @@ def run():
     dbservicefactory = DbServiceFactory()
     
     # create a list of plugins
-    active_plugins = [
-        importlib.import_module("."+plugin,"resources.plugins").Plugin(dbservicefactory) for plugin in plugins
-    ]
+    active_plugins = []
+    for plugin in plugins:
+        try:
+            active_plugins.append(importlib.import_module("."+plugin,"resources.plugins").Plugin(dbservicefactory))
+        except Exception as exc:
+            logging.error('%r failed to load. Exception:' % (plugin))
+            traceback.print_exc()
     logging.info("Default plugins loaded")
     logging.info(plugins)
 
@@ -41,8 +46,14 @@ def run():
     if(external_plugins != None and external_plugins != ""):
         external_plugins = external_plugins.split(',')
         for plugin in external_plugins:
-            active_plugins.append(importlib.import_module("."+plugin,"resources.externalplugins").Plugin(dbservicefactory))
-            logging.info("External plugin %s loaded"%(plugin))
+            try:
+                active_plugins.append(importlib.import_module("."+plugin,"resources.externalplugins").Plugin(dbservicefactory))
+                logging.info("External plugin %s loaded"%(plugin))
+            except Exception as exc:
+                logging.error('%r failed to load. Exception:' % (plugin))
+                traceback.print_exc()
+
+    #main loop - execute the process() function of each plugin periodically            
     time_stamps = {}
     while(not time.sleep(1)):
         with ThreadPoolExecutor(max_workers = config.max_threads) as executor:
@@ -60,6 +71,7 @@ def run():
                 try:
                     value, payload = future.result()
                 except Exception as exc:
-                    logging.error('%r generated an exception: %s' % (signal_name, exc))
+                    logging.error('%r generated an exception:' % (signal_name))
+                    traceback.print_exc()
                 else:
                     generate_signal(signal_name,value.value,payload)
