@@ -110,3 +110,83 @@ muhammad.haris@afiniti.com
 
 * 1.0.0
     * Initial release
+
+## Environment variables
+<table>
+<thead>
+  <tr>
+    <th>Environment Variable</th>
+    <th>Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>PW_OV_VERSION</td>
+    <td>Oversight version <br/> - Set to "1" for oversight V1<br/> - Set to "3.1" for SNMP agent with influxDB V1 <br/> - Set to "3.2" for SNMP agent with influxDB V2</td>
+  </tr>
+  <tr>
+    <td>PW_OV_HOST</td>
+    <td>IP of Oversight</td>
+  </tr>
+  <tr>
+    <td>PW_OV_PORT</td>
+    <td>Port where Oversight listens for push signals</td>
+  </tr>
+  <tr>
+    <td>PW_MONGO_DB_IP</td>
+    <td>IP of Mongo DB. Only used with Oversight V1</td>
+  </tr>
+  <tr>
+    <td>PW_MONGO_DB_PORT</td>
+    <td>Port of Mongo DB. Only used with Oversight V1</td>
+  </tr>
+  <tr>
+    <td>PW_MONGO_DB_USER</td>
+    <td>DB username for Mongo DB. Only used with Oversight V1 </td>
+  </tr>
+  <tr>
+    <td>PW_MONGO_DB_PWD</td>
+    <td>DB upassword for Mongo DB. Only used with Oversight V1</td>
+  </tr>
+  <tr>
+    <td>PW_MONGO_DB_DBNAME</td>
+    <td>DB to fetch data from. Only used with Oversight V1</td>
+  </tr>
+  <tr>
+    <td>PW_INFLUX_DB_IP</td>
+    <td>IP of InfluxDB. Only used with Oversight V3.X</td>
+  </tr>
+  <tr>
+    <td>PW_INFLUX_DB_PORT</td>
+    <td>Port of InfluxDB. Only used with Oversight V3.X</td>
+  </tr>
+  <tr>
+    <td>PW_INFLUX_DB_USER</td>
+    <td>Username of InfluxDB. Only used with Oversight V3.1</td>
+  </tr>
+  <tr>
+    <td>PW_INFLUX_DB_PWD</td>
+    <td>Password of InfluxDB. Only used with Oversight V3.1</td>
+  </tr>
+  <tr>
+    <td>PW_INFLUX_DB_DBNAME</td>
+    <td>Databse of InfluxDB. Only used with Oversight V3.1</td>
+  </tr>
+  <tr>
+    <td>PW_INFLUX_DB_TOKEN</td>
+    <td>DB Token of InfluxDB. Only used with Oversight V3.2</td>
+  </tr>
+  <tr>
+    <td>PW_INFLUX_DB_ORG</td>
+    <td>Organization of InfluxDB. Only used with Oversight V3.2</td>
+  </tr>
+  <tr>
+    <td>PW_EXTERNAL_PLUGINS</td>
+    <td>Comma seperated list of external plugin names. See section above for more details</td>
+  </tr>
+  <tr>
+    <td>PW_MAX_THREADS</td>
+    <td>Max threads to run predictive sensors on.</td>
+  </tr>
+</tbody>
+</table>

@@ -3,11 +3,19 @@ oversight:
   host: PW_OV_HOST
   port: PW_OV_PORT
 mongo:
-  host: PW_MONGO_DATABASE_IP
-  port: PW_MONGO_DATABASE_PORT
-  user: PW_MONGO_DATABASE_USER
-  password: PW_MONGO_DATABASE_PWD
-  db: PW_MONGO_DATABASE_DBNAME
-
+  host: PW_MONGO_DB_IP
+  port: PW_MONGO_DB_PORT
+  user: PW_MONGO_DB_USER
+  password: PW_MONGO_DB_PWD
+  db: PW_MONGO_DB_DBNAME
+influx:
+  host: PW_INFLUX_DB_IP
+  port: PW_INFLUX_DB_PORT
+  user: PW_INFLUX_DB_USER
+  password: PW_INFLUX_DB_PWD
+  db: PW_INFLUX_DB_DBNAME
+  token: PW_INFLUX_DB_TOKEN
+  org: PW_INFLUX_DB_ORG
+  
 externalplugins: PW_EXTERNAL_PLUGINS
 max_threads: PW_MAX_THREADS

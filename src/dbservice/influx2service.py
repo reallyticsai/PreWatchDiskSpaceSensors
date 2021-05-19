@@ -8,10 +8,10 @@ from influxdb_client import InfluxDBClient
 class Influx2Service(DbServiceInterface):
 
     def __init__(self):
-        host = config.influx2.host
-        port = config.influx2.port
-        token = config.influx2.token
-        org = config.influx2.org
+        host = config.influx.host
+        port = config.influx.port
+        token = config.influx.token
+        org = config.influx.org
         
         try:
             self.client = InfluxDBClient(url=f'http://{host}:{port}', token=token, org=org)
