@@ -59,11 +59,14 @@ def get_interval(self):
         return 60 #runs every ten seconds
 ```
 
-5. There should be a "process" method that runs the main logic of your sensor. This method must return a tuple of (level,payload)
+5. There should be a "process" method that runs the main logic of your sensor. This method must return a tuple of (level,payload). Payload must contain the "value" key. It can also contain any other information you want.
 ```python
 def process(self):
     #do some magic here
-    payload = {}
+    payload = {
+      "value":10,
+      "hello":"world"
+    }
     return Levels.NORMAL,payload
 ```
 

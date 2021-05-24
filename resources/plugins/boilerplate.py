@@ -53,6 +53,6 @@ class Plugin:
         #Do some magic here
 
         sleep(5)
-        payload = {}
+        payload = {"value":15}
         
         return Levels.NORMAL,payload

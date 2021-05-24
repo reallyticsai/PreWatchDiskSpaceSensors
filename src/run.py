@@ -15,7 +15,7 @@ def generate_signal(signal_name, value, payload):
     }
     json = { "deployment" : { "ACD" : "Predictive", "tenantID" : "avaya" }, 
     "name" : signal_name, "__v" : 0, "level" : value, 
-    "payload" : {"state": "1", "data" : [[ payload ]] }, "signaler" : "Pre-Watch", "syncRequest":True, 
+    "payload" : {"state": payload['value'], "data" : [[ payload ]] }, "signaler" : "Pre-Watch", "syncRequest":True, 
     "timestamps" : { "postTime" : round(time.time() * 1000) }
     }
     response = None
