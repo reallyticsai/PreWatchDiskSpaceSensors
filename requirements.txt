@@ -3,3 +3,9 @@ pymongo
 pandas
 influxdb
 influxdb-client
+fbprophet
+statsmodels
+tensorflow
+scikit-learn
+sklearn
+keras
