@@ -4,6 +4,7 @@ pandas
 influxdb
 influxdb-client
 numpy
+pystan~=2.14
 fbprophet
 statsmodels
 tensorflow
