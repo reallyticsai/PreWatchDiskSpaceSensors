@@ -3,6 +3,7 @@ pymongo
 pandas
 influxdb
 influxdb-client
+numpy
 fbprophet
 statsmodels
 tensorflow
