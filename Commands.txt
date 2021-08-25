@@ -1,29 +1,30 @@
-docker cp ./cpu-load-ai-vm.py pre-watch:/app/resources/plugins/cpu-load-ai-vm.py
-docker cp ./cpu-load-archdb-vm.py pre-watch:/app/resources/plugins/cpu-load-archdb-vm.py
-docker cp ./cpu-load-proddb-vm.py pre-watch:/app/resources/plugins/cpu-load-proddb-vm.py
-docker cp ./cpu-load-v6core-vm.py pre-watch:/app/resources/plugins/cpu-load-v6core-vm.py
+docker cp ./cpu-load-ai-vm.py ov-pre_watch:/app/resources/plugins/cpu-load-ai-vm.py
+docker cp ./cpu-load-archdb-vm.py ov-pre_watch:/app/resources/plugins/cpu-load-archdb-vm.py
+docker cp ./cpu-load-proddb-vm.py ov-pre_watch:/app/resources/plugins/cpu-load-proddb-vm.py
+docker cp ./cpu-load-v6core-vm.py ov-pre_watch:/app/resources/plugins/cpu-load-v6core-vm.py
 
-docker cp ./data-dir-ai-vm.py pre-watch:/app/resources/plugins/data-dir-ai-vm.py
-docker cp ./data-dir-archdb-vm.py pre-watch:/app/resources/plugins/data-dir-archdb-vm.py
-docker cp ./data-dir-proddb-vm.py pre-watch:/app/resources/plugins/data-dir-proddb-vm.py
-docker cp ./data-dir-v6core-vm.py pre-watch:/app/resources/plugins/data-dir-v6core-vm.py
+docker cp ./data-dir-ai-vm.py ov-pre_watch:/app/resources/plugins/data-dir-ai-vm.py
+docker cp ./data-dir-archdb-vm.py ov-pre_watch:/app/resources/plugins/data-dir-archdb-vm.py
+docker cp ./data-dir-proddb-vm.py ov-pre_watch:/app/resources/plugins/data-dir-proddb-vm.py
+docker cp ./data-dir-v6core-vm.py ov-pre_watch:/app/resources/plugins/data-dir-v6core-vm.py
 
-docker cp ./log-dir-archdb-vm.py pre-watch:/app/resources/plugins/log-dir-archdb-vm.py
-docker cp ./log-dir-proddb-vm.py pre-watch:/app/resources/plugins/log-dir-proddb-vm.py
-docker cp ./log-dir-v6core-vm.py pre-watch:/app/resources/plugins/log-dir-v6core-vm.py
+docker cp ./log-dir-archdb-vm.py ov-pre_watch:/app/resources/plugins/log-dir-archdb-vm.py
+docker cp ./log-dir-proddb-vm.py ov-pre_watch:/app/resources/plugins/log-dir-proddb-vm.py
+docker cp ./log-dir-v6core-vm.py ov-pre_watch:/app/resources/plugins/log-dir-v6core-vm.py
 
-docker cp ./mysql-service-status-proddb-vm.py pre-watch:/app/resources/plugins/mysql-service-status-proddb-vm.py
+docker cp ./mysql-service-status-proddb-vm.py ov-pre_watch:/app/resources/plugins/mysql-service-status-proddb-vm.py
 
-docker cp ./root-dir-v6core-vm.py pre-watch:/app/resources/plugins/root-dir-v6core-vm.py
-docker cp ./root-dir-ai-vm.py pre-watch:/app/resources/plugins/root-dir-ai-vm.py
-docker cp ./root-dir-archdb-vm.py pre-watch:/app/resources/plugins/root-dir-archdb-vm.py
-docker cp ./root-dir-proddb-vm.py pre-watch:/app/resources/plugins/root-dir-proddb-vm.py
+docker cp ./root-dir-v6core-vm.py ov-pre_watch:/app/resources/plugins/root-dir-v6core-vm.py
+docker cp ./root-dir-ai-vm.py ov-pre_watch:/app/resources/plugins/root-dir-ai-vm.py
+docker cp ./root-dir-archdb-vm.py ov-pre_watch:/app/resources/plugins/root-dir-archdb-vm.py
+docker cp ./root-dir-proddb-vm.py ov-pre_watch:/app/resources/plugins/root-dir-proddb-vm.py
 
-docker cp ./ram-usage-archdb-vm.py pre-watch:/app/resources/plugins/ram-usage-archdb-vm.py
-docker cp ./ram-usage-proddb-vm.py pre-watch:/app/resources/plugins/ram-usage-proddb-vm.py
-docker cp ./ram-usage-v6core-vm.py pre-watch:/app/resources/plugins/ram-usage-v6core-vm.py
-docker cp ./ram-usage-ai-vm.py pre-watch:/app/resources/plugins/ram-usage-ai-vm.py
+docker cp ./ram-usage-archdb-vm.py ov-pre_watch:/app/resources/plugins/ram-usage-archdb-vm.py
+docker cp ./ram-usage-proddb-vm.py ov-pre_watch:/app/resources/plugins/ram-usage-proddb-vm.py
+docker cp ./ram-usage-v6core-vm.py ov-pre_watch:/app/resources/plugins/ram-usage-v6core-vm.py
+docker cp ./ram-usage-ai-vm.py ov-pre_watch:/app/resources/plugins/ram-usage-ai-vm.py
 
-docker cp ./active_plugins.py pre-watch:/app/resources/active_plugins.py
-docker restart pre-watch
-docker logs pre-watch --tail 50
+docker cp ./active_plugins.py ov-pre_watch:/app/resources/active_plugins.py
+docker logs ov-pre_watch --tail 50
+
+docker restart ov-pre_watch
