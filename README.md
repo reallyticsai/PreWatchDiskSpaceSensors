@@ -109,10 +109,8 @@ docker-compose up -d --build
 Syed Muhammad Haris  
 muhammad.haris@afiniti.com
 
-## Version History
-
-* 1.0.0
-    * Initial release
+Muhammad Bin Jamil  
+muhammad.jamil@afiniti.com
 
 ## Environment variables
 <table>

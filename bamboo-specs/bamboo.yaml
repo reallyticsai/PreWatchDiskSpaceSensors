@@ -1,0 +1,43 @@
+---
+version: 2
+plan:
+  project-key: V6
+  name: pre-watch
+  key: PWS
+stages:
+  - Build:
+      - DockerBuild
+  - CD:
+      - DockerRegistryUpdate
+
+DockerBuild:
+  tasks:
+    - clean
+    - script: |
+        set -e
+        docker build . -t pre-watch
+DockerRegistryUpdate:
+  tasks:
+    - clean
+    - script: |
+        set -e
+        branch=${bamboo_repository_git_branch}
+
+        if [[ "${branch}" == "release"* ]] || [[ "${branch}" == "master" ]]; then
+          tag=`sed -n "s/^.*'\(.*\)'.*$/\1/ p" <<< cat version.py`
+          echo "Hello world"
+
+          image_status=`curl --insecure -s -o /dev/null -w "%{http_code}" https://docker.afiniti.com/v2/pre-watch/manifests/$tag`
+          if [[ $image_status == "200" ]]; then echo "Image already exists pre-watch:$tag" && exit -1; fi;
+
+          docker tag pre-watch docker.afiniti.com/pre-watch:$tag
+          docker tag pre-watch docker.afiniti.com/pre-watch:latest
+          
+          docker push docker.afiniti.com/pre-watch:$tag
+          docker push docker.afiniti.com/pre-watch:latest
+
+          git tag -f -a $tag -m "Automated deployment release from build number ${bamboo.buildNumber}."
+          git remote add central "https://oversight:0verS!ght@code.afiniti.com/scm/in/pre-watch.git"
+          git push central --tags
+          git ls-remote --exit-code --tags central ${tag}
+        fi;
