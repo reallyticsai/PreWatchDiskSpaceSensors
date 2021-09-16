@@ -25,6 +25,7 @@ DockerRegistryUpdate:
 
         if [[ "${branch}" == "release"* ]] || [[ "${branch}" == "master" ]]; then
           tag=`sed -n "s/^.*'\(.*\)'.*$/\1/ p" <<< cat version.py`
+          echo "Hello world"
 
           image_status=`curl --insecure -s -o /dev/null -w "%{http_code}" https://docker.afiniti.com/v2/pre-watch/manifests/$tag`
           if [[ $image_status == "200" ]]; then echo "Image already exists pre-watch:$tag" && exit -1; fi;
