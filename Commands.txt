@@ -13,6 +13,7 @@ docker cp ./log-dir-proddb-vm.py ov-pre_watch:/app/resources/plugins/log-dir-pro
 docker cp ./log-dir-v6core-vm.py ov-pre_watch:/app/resources/plugins/log-dir-v6core-vm.py
 
 docker cp ./mysql-service-status-proddb-vm.py ov-pre_watch:/app/resources/plugins/mysql-service-status-proddb-vm.py
+docker cp ./mysql-service-status-archdb-vm.py ov-pre_watch:/app/resources/plugins/mysql-service-status-archdb-vm.py
 
 docker cp ./root-dir-v6core-vm.py ov-pre_watch:/app/resources/plugins/root-dir-v6core-vm.py
 docker cp ./root-dir-ai-vm.py ov-pre_watch:/app/resources/plugins/root-dir-ai-vm.py
@@ -27,4 +28,6 @@ docker cp ./ram-usage-ai-vm.py ov-pre_watch:/app/resources/plugins/ram-usage-ai-
 docker cp ./active_plugins.py ov-pre_watch:/app/resources/active_plugins.py
 docker logs ov-pre_watch --tail 50
 
+
+docker cp ov-pre_watch:/app/resources/plugins/cpu-load-ai-vm.py .
 docker restart ov-pre_watch

@@ -19,5 +19,6 @@ plugins = [
     "ram-usage-v6core-vm",
     "ram-usage-ai-vm",
     "mysql-service-status-proddb-vm",
+    "mysql-service-status-archdb-vm",
     "boilerplate"
 ]

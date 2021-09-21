@@ -34,7 +34,7 @@ class Plugin:
         self.r2=0
         self.sum=0
         self.query = {
-            "name": "ROOT DIRECTORY ARCHDB VM"
+            "name": "MYSQL SERVICE STATUS ARCHDB VM"
         }
         self.payload = {
             "value": 0,
@@ -73,7 +73,7 @@ class Plugin:
 
     #define this function to return the name of the signal (this will appear on the oversight UI)
     def get_name(self):
-        return "PREDICTIVE ROOT DIRECTORY ARCHDB VM"
+        return "PREDICTIVE MYSQL SERVICE STATUS ARCHDB VM"
 
     #define this function to return the interval that this signal must run
     def get_interval(self):
