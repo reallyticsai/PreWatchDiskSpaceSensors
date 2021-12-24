@@ -11,3 +11,8 @@ tensorflow
 scikit-learn
 sklearn
 keras
+psycopg2
+sqlalchemy
+statsmodels
+statistics
+AutoReg
