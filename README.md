@@ -107,10 +107,8 @@ docker-compose up -d --build
 
 ## Authors
 Syed Muhammad Haris  
-muhammad.haris@afiniti.com
-
+Sheikh Muhammad Qasim
 Muhammad Bin Jamil  
-muhammad.jamil@afiniti.com
 
 ## Environment variables
 <table>
